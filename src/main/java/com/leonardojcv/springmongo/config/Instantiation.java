@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.leonardojcv.springmongo.domain.Post;
 import com.leonardojcv.springmongo.domain.User;
 import com.leonardojcv.springmongo.dto.AuthorDTO;
+import com.leonardojcv.springmongo.dto.CommentDTO;
 import com.leonardojcv.springmongo.repository.PostRepository;
 import com.leonardojcv.springmongo.repository.UserRepository;
 
@@ -40,6 +41,13 @@ public class Instantiation implements CommandLineRunner{
 		
 		Post post1 = new Post(null, sdf.parse("04/11/2023"), "Partiu show", "Vou para o show do Roger Waters", new AuthorDTO(leonardo));
 		Post post2 = new Post(null, sdf.parse("30/10/2023"), "Bom dia", "Acordei feliz!", new AuthorDTO(leonardo));
+		
+		CommentDTO c1 = new CommentDTO("Bora!", sdf.parse("04/11/2023"), new AuthorDTO(dua));
+		CommentDTO c2 = new CommentDTO("Uhul", sdf.parse("30/10/2023"), new AuthorDTO(jhenyfer));
+		CommentDTO c3 = new CommentDTO("Que felicidade", sdf.parse("30/10/2023"), new AuthorDTO(jhenyfer));
+		
+		post1.getComments().addAll(Arrays.asList(c1));
+		post2.getComments().addAll(Arrays.asList(c2, c3));
 		
 		postRepository.save(post1);
 		postRepository.save(post2);
