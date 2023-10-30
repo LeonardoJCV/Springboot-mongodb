@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.leonardojcv.springmongo.domain.Post;
 import com.leonardojcv.springmongo.domain.User;
 import com.leonardojcv.springmongo.dto.UserDTO;
 import com.leonardojcv.springmongo.services.UserService;
@@ -39,6 +40,12 @@ public class UserResource {
 		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 	
+	@GetMapping(value="/{id}/posts")
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(obj.getPosts());
+	}
+	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void>delete(@PathVariable String id){
 		service.delete(id);
@@ -51,4 +58,5 @@ public class UserResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
+	
 }
