@@ -1,6 +1,7 @@
 package com.leonardojcv.springmongo.config;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class Instantiation implements CommandLineRunner{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		userRepository.deleteAll();
+		postRepository.deleteAll();
 		
 		User leonardo = new User(null, "Leonardo Vieira", "leonardo@gmail.com");
 		User jhenyfer = new User(null, "Jhenyfer Fernandes", "jhenyfer@gmail.com");
@@ -41,6 +43,10 @@ public class Instantiation implements CommandLineRunner{
 		
 		postRepository.save(post1);
 		postRepository.save(post2);
+		
+		leonardo.getPosts().addAll(Arrays.asList(post1, post2));
+		
+		userRepository.save(leonardo);
 	}
 
 }
