@@ -1,5 +1,7 @@
 package com.leonardojcv.springmongo.services;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,19 @@ import com.leonardojcv.springmongo.services.exception.ObjectNotFoundException;
 public class PostService {
 
 	@Autowired
-	public PostRepository repository;
-
+	private PostRepository repository;
+	
 	public Post findById(String id) {
 		Optional<Post> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found"));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
-
+	
+	public List<Post> findByTitle(String text) {
+		return repository.searchTitle(text);
+	}
+	
+	public List<Post> fullSearch(String text, Date minDate, Date maxDate) {
+		maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);
+		return repository.fullSearch(text, minDate, maxDate);
+	}
 }

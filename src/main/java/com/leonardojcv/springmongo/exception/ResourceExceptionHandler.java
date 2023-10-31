@@ -1,4 +1,4 @@
-package com.leonardojcv.springmongo.resources.exception;
+package com.leonardojcv.springmongo.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +11,12 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
-	
+
 	@ExceptionHandler(ObjectNotFoundException.class)
-	public ResponseEntity<StandardError>objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
+	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
+		
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		StandardError error = new StandardError
-				(System.currentTimeMillis(), status.value(), "Not found", e.getMessage(), request.getRequestURI());
-		return ResponseEntity.status(status).body(error);
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Não encontrado", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
 	}
 }

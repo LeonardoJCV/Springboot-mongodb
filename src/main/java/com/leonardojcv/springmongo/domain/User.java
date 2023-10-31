@@ -10,9 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
-@Data
 @Document(collection="user")
-public class User implements Serializable{
+@Data
+public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -21,13 +21,14 @@ public class User implements Serializable{
 	private String name;
 	private String email;
 	
-	//Mapeamento com carregamento lento
 	@DBRef(lazy=true)
-	private List<Post>posts = new ArrayList<>();
+	private List<Post> posts = new ArrayList<>();
 	
 	public User(String id, String name, String email) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 	}
+
 }
